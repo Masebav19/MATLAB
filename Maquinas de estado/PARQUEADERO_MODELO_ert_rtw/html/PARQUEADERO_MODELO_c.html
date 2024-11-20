@@ -1,0 +1,358 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>RTW Report - PARQUEADERO_MODELO.c</title>
+<link rel="stylesheet" type="text/css" href="rtwreport.css"></link><script language="JavaScript" type="text/javascript" src="rtwreport_utils.js"></script>
+<SCRIPT type="text/javascript" src="rtwannotate.js"></SCRIPT>
+</head>
+<body bgcolor="#eeeeee" onload="try {if (top) { if (top.rtwFileOnLoad) top.rtwFileOnLoad(window.document); else local_onload();}} catch(err) {};if (typeof rtwannotate === 'function') {rtwannotate('PARQUEADERO_MODELO_c_cov.xml');}">
+<p>
+<table border="0" cellspacing="0" cellpadding="6" width="100%%" height="100%%"><tr><td width="100%%" valign="top" bgcolor="#ffffff">
+<h4>File: <a href="../PARQUEADERO_MODELO.c" target="rtwreport_document_frame" id="linkToText_plain">PARQUEADERO_MODELO.c</a></h4>
+<pre id="RTWcode">
+<span><a class="LN" name="1">    1   </a><span class="CT">/*</span>
+</span><span><a class="LN" name="2">    2   </a><span class="CT"> * Academic License - for use in teaching, academic research, and meeting</span>
+</span><span><a class="LN" name="3">    3   </a><span class="CT"> * course requirements at degree granting institutions only.  Not for</span>
+</span><span><a class="LN" name="4">    4   </a><span class="CT"> * government, commercial, or other organizational use.</span>
+</span><span><a class="LN" name="5">    5   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="6">    6   </a><span class="CT"> * File: PARQUEADERO_MODELO.c</span>
+</span><span><a class="LN" name="7">    7   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="8">    8   </a><span class="CT"> * Code generated for Simulink model 'PARQUEADERO_MODELO'.</span>
+</span><span><a class="LN" name="9">    9   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="10">   10   </a><span class="CT"> * Model version                  : 1.3</span>
+</span><span><a class="LN" name="11">   11   </a><span class="CT"> * Simulink Coder version         : 9.4 (R2020b) 29-Jul-2020</span>
+</span><span><a class="LN" name="12">   12   </a><span class="CT"> * C/C++ source code generated on : Thu Jun 30 08:37:34 2022</span>
+</span><span><a class="LN" name="13">   13   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="14">   14   </a><span class="CT"> * Target selection: ert.tlc</span>
+</span><span><a class="LN" name="15">   15   </a><span class="CT"> * Embedded hardware selection: Intel-&gt;x86-64 (Windows64)</span>
+</span><span><a class="LN" name="16">   16   </a><span class="CT"> * Code generation objectives:</span>
+</span><span><a class="LN" name="17">   17   </a><span class="CT"> *    1. Execution efficiency</span>
+</span><span><a class="LN" name="18">   18   </a><span class="CT"> *    2. RAM efficiency</span>
+</span><span><a class="LN" name="19">   19   </a><span class="CT"> * Validation result: Not run</span>
+</span><span><a class="LN" name="20">   20   </a><span class="CT"> */</span>
+</span><span><a class="LN" name="21">   21   </a>
+</span><span><a class="LN" name="22">   22   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;PARQUEADERO_MODELO.h&quot;</font>
+</span><span><a class="LN" name="23">   23   </a>
+</span><span><a class="LN" name="24">   24   </a><span class="CT">/* Named constants for Chart: '&lt;S1&gt;/Chart' */</span>
+</span><span><a class="LN" name="25">   25   </a><font color="#992211">#</font><span class="PP">define</span> IN_CERRAR_PUERTA               ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)1U)
+</span><span><a class="LN" name="26">   26   </a><font color="#992211">#</font><span class="PP">define</span> IN_LIBRE                       ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)1U)
+</span><span><a class="LN" name="27">   27   </a><font color="#992211">#</font><span class="PP">define</span> IN_NO_ACTIVE_CHILD             ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)0U)
+</span><span><a class="LN" name="28">   28   </a><font color="#992211">#</font><span class="PP">define</span> IN_OCUPADO                     ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)2U)
+</span><span><a class="LN" name="29">   29   </a><font color="#992211">#</font><span class="PP">define</span> IN_PASO_LIBRE                  ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)1U)
+</span><span><a class="LN" name="30">   30   </a><font color="#992211">#</font><span class="PP">define</span> IN_RESTAR_COCHES               ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)2U)
+</span><span><a class="LN" name="31">   31   </a><font color="#992211">#</font><span class="PP">define</span> IN_SUMAR_COCHES1               ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)3U)
+</span><span><a class="LN" name="32">   32   </a><font color="#992211">#</font><span class="PP">define</span> IN_inicio                      ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)3U)
+</span><span><a class="LN" name="33">   33   </a><font color="#992211">#</font><span class="PP">define</span> IN_inicio_                     ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)3U)
+</span><span><a class="LN" name="34">   34   </a><font color="#992211">#</font><span class="PP">define</span> IN_inicio_f                    ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)4U)
+</span><span><a class="LN" name="35">   35   </a><font color="#992211">#</font><span class="PP">define</span> IN_paso_ocupado                ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)5U)
+</span><span><a class="LN" name="36">   36   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;solver_zc.h&quot;</font>
+</span><span><a class="LN" name="37">   37   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;zero_crossing_types.h&quot;</font>
+</span><span><a class="LN" name="38">   38   </a><font color="#992211">#</font><span class="PP">ifndef</span> slZcHadEvent
+</span><span><a class="LN" name="39">   39   </a><font color="#992211">#</font><span class="PP">define</span> slZcHadEvent(ev, zcsDir)       (((ev) &amp; (zcsDir)) != 0x00 )
+</span><span><a class="LN" name="40">   40   </a><font color="#992211">#</font><span class="PP">endif</span>
+</span><span><a class="LN" name="41">   41   </a>
+</span><span><a class="LN" name="42">   42   </a><font color="#992211">#</font><span class="PP">ifndef</span> slZcUnAliasEvents
+</span><span><a class="LN" name="43">   43   </a><font color="#992211">#</font><span class="PP">define</span> slZcUnAliasEvents(evL, evR)    ((((slZcHadEvent((evL), (SL_ZCS_EVENT_N2Z)) &amp;&amp; slZcHadEvent((evR), (SL_ZCS_EVENT_Z2P))) || (slZcHadEvent((evL), (SL_ZCS_EVENT_P2Z)) &amp;&amp; slZcHadEvent((evR), (SL_ZCS_EVENT_Z2N)))) ? (SL_ZCS_EVENT_NUL) : (evR)))
+</span><span><a class="LN" name="44">   44   </a><font color="#992211">#</font><span class="PP">endif</span>
+</span><span><a class="LN" name="45">   45   </a>
+</span><span><a class="LN" name="46">   46   </a><span class="CT">/* Block signals and states (default storage) */</span>
+</span><span><a class="LN" name="47">   47   </a><a href="PARQUEADERO_MODELO_h.html#type_DW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW');" target="_self"><font color="#1122aa">DW</font></a> <a name="var_rtDW">rtDW</a>;
+</span><span><a class="LN" name="48">   48   </a>
+</span><span><a class="LN" name="49">   49   </a><span class="CT">/* Previous zero-crossings (trigger) states */</span>
+</span><span><a class="LN" name="50">   50   </a><a href="PARQUEADERO_MODELO_h.html#type_PrevZCX" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_PrevZCX');" target="_self"><font color="#1122aa">PrevZCX</font></a> <a name="var_rtPrevZCX">rtPrevZCX</a>;
+</span><span><a class="LN" name="51">   51   </a>
+</span><span><a class="LN" name="52">   52   </a><span class="CT">/* External inputs (root inport signals with default storage) */</span>
+</span><span><a class="LN" name="53">   53   </a><a href="PARQUEADERO_MODELO_h.html#type_ExtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ExtU');" target="_self"><font color="#1122aa">ExtU</font></a> <a name="var_rtU">rtU</a>;
+</span><span><a class="LN" name="54">   54   </a>
+</span><span><a class="LN" name="55">   55   </a><span class="CT">/* External outputs (root outports fed by signals with default storage) */</span>
+</span><span><a class="LN" name="56">   56   </a><a href="PARQUEADERO_MODELO_h.html#type_ExtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ExtY');" target="_self"><font color="#1122aa">ExtY</font></a> <a name="var_rtY">rtY</a>;
+</span><span><a class="LN" name="57">   57   </a>
+</span><span><a class="LN" name="58">   58   </a><span class="CT">/* Real-time model */</span>
+</span><span><a class="LN" name="59">   59   </a><span class="DT">static</span> <a href="PARQUEADERO_MODELO_h.html#type_RT_MODEL" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_RT_MODEL');" target="_self"><font color="#1122aa">RT_MODEL</font></a> <a name="var_rtM_">rtM_</a>;
+</span><span><a class="LN" name="60">   60   </a><a href="PARQUEADERO_MODELO_h.html#type_RT_MODEL" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_RT_MODEL');" target="_self"><font color="#1122aa">RT_MODEL</font></a> *<span class="DT">const</span> <a name="var_rtM">rtM</a> = &amp;<a href="#var_rtM_" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtM_');" target="_self"><font color="#1122aa">rtM_</font></a>;
+</span><span><a class="LN" name="61">   61   </a><span class="DT">static</span> <a href="zero_crossing_types_h.html#type_ZCEventType" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ZCEventType');" target="_self"><font color="#1122aa">ZCEventType</font></a> <a href="#fcn_rt_ZCFcn" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rt_ZCFcn');" target="_self"><font color="#1122aa">rt_ZCFcn</font></a>(<a href="zero_crossing_types_h.html#type_ZCDirection" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ZCDirection');" target="_self"><font color="#1122aa">ZCDirection</font></a> zcDir, <a href="zero_crossing_types_h.html#type_ZCSigState" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ZCSigState');" target="_self"><font color="#1122aa">ZCSigState</font></a> *prevZc, <a href="rtwtypes_h.html#type_real_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_real_T');" target="_self"><font color="#1122aa">real_T</font></a>
+</span><span><a class="LN" name="62">   62   </a>  currValue);
+</span><span><a class="LN" name="63">   63   </a>
+</span><span><a class="LN" name="64">   64   </a><span class="CT">/* Detect zero crossings events. */</span>
+</span><span><a class="LN" name="65">   65   </a><span class="DT">static</span> <a href="zero_crossing_types_h.html#type_ZCEventType" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ZCEventType');" target="_self"><font color="#1122aa">ZCEventType</font></a> <a name="fcn_rt_ZCFcn">rt_ZCFcn</a>(<a href="zero_crossing_types_h.html#type_ZCDirection" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ZCDirection');" target="_self"><font color="#1122aa">ZCDirection</font></a> zcDir, <a href="zero_crossing_types_h.html#type_ZCSigState" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ZCSigState');" target="_self"><font color="#1122aa">ZCSigState</font></a>* prevZc, <a href="rtwtypes_h.html#type_real_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_real_T');" target="_self"><font color="#1122aa">real_T</font></a>
+</span><span><a class="LN" name="66">   66   </a>  currValue)
+</span><span><a class="LN" name="67">   67   </a><b>{</b>
+</span><span><a class="LN" name="68">   68   </a>  slZcEventType zcsDir;
+</span><span><a class="LN" name="69">   69   </a>  slZcEventType tempEv;
+</span><span><a class="LN" name="70">   70   </a>  <a href="zero_crossing_types_h.html#type_ZCEventType" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ZCEventType');" target="_self"><font color="#1122aa">ZCEventType</font></a> zcEvent = NO_ZCEVENT;    <span class="CT">/* assume */</span>
+</span><span><a class="LN" name="71">   71   </a>
+</span><span><a class="LN" name="72">   72   </a>  <span class="CT">/* zcEvent matrix */</span>
+</span><span><a class="LN" name="73">   73   </a>  <span class="DT">static</span> <span class="DT">const</span> slZcEventType eventMatrix[4][4] = <b>{</b>
+</span><span><a class="LN" name="74">   74   </a>    <span class="CT">/*          ZER              POS              NEG              UNK */</span>
+</span><span><a class="LN" name="75">   75   </a>    <b>{</b> SL_ZCS_EVENT_NUL, SL_ZCS_EVENT_Z2P, SL_ZCS_EVENT_Z2N, SL_ZCS_EVENT_NUL <b>}</b>,<span class="CT">/* ZER */</span>
+</span><span><a class="LN" name="76">   76   </a>
+</span><span><a class="LN" name="77">   77   </a>    <b>{</b> SL_ZCS_EVENT_P2Z, SL_ZCS_EVENT_NUL, SL_ZCS_EVENT_P2N, SL_ZCS_EVENT_NUL <b>}</b>,<span class="CT">/* POS */</span>
+</span><span><a class="LN" name="78">   78   </a>
+</span><span><a class="LN" name="79">   79   </a>    <b>{</b> SL_ZCS_EVENT_N2Z, SL_ZCS_EVENT_N2P, SL_ZCS_EVENT_NUL, SL_ZCS_EVENT_NUL <b>}</b>,<span class="CT">/* NEG */</span>
+</span><span><a class="LN" name="80">   80   </a>
+</span><span><a class="LN" name="81">   81   </a>    <b>{</b> SL_ZCS_EVENT_NUL, SL_ZCS_EVENT_NUL, SL_ZCS_EVENT_NUL, SL_ZCS_EVENT_NUL <b>}</b><span class="CT">/* UNK */</span>
+</span><span><a class="LN" name="82">   82   </a>  <b>}</b>;
+</span><span><a class="LN" name="83">   83   </a>
+</span><span><a class="LN" name="84">   84   </a>  <span class="CT">/* get prevZcEvent and prevZcSign from prevZc */</span>
+</span><span><a class="LN" name="85">   85   </a>  slZcEventType prevEv = (slZcEventType)(((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)(*prevZc)) &gt;&gt; 2);
+</span><span><a class="LN" name="86">   86   </a>  slZcSignalSignType prevSign = (slZcSignalSignType)(((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)(*prevZc)) &amp;
+</span><span><a class="LN" name="87">   87   </a>    (<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)0x03);
+</span><span><a class="LN" name="88">   88   </a>
+</span><span><a class="LN" name="89">   89   </a>  <span class="CT">/* get current zcSignal sign from current zcSignal value */</span>
+</span><span><a class="LN" name="90">   90   </a>  slZcSignalSignType currSign = (slZcSignalSignType)((currValue) &gt; 0.0 ?
+</span><span><a class="LN" name="91">   91   </a>    SL_ZCS_SIGN_POS :
+</span><span><a class="LN" name="92">   92   </a>    ((currValue) &lt; 0.0 ? SL_ZCS_SIGN_NEG : SL_ZCS_SIGN_ZERO));
+</span><span><a class="LN" name="93">   93   </a>
+</span><span><a class="LN" name="94">   94   </a>  <span class="CT">/* get current zcEvent based on prev and current zcSignal value */</span>
+</span><span><a class="LN" name="95">   95   </a>  slZcEventType currEv = eventMatrix[prevSign][currSign];
+</span><span><a class="LN" name="96">   96   </a>
+</span><span><a class="LN" name="97">   97   </a>  <span class="CT">/* get slZcEventType from ZCDirection */</span>
+</span><span><a class="LN" name="98">   98   </a>  <span class="KW">switch</span> (zcDir) <b>{</b>
+</span><span><a class="LN" name="99">   99   </a>   <span class="KW">case</span> ANY_ZERO_CROSSING:
+</span><span><a class="LN" name="100">  100   </a>    zcsDir = SL_ZCS_EVENT_ALL;
+</span><span><a class="LN" name="101">  101   </a>    <span class="KW">break</span>;
+</span><span><a class="LN" name="102">  102   </a>
+</span><span><a class="LN" name="103">  103   </a>   <span class="KW">case</span> FALLING_ZERO_CROSSING:
+</span><span><a class="LN" name="104">  104   </a>    zcsDir = SL_ZCS_EVENT_ALL_DN;
+</span><span><a class="LN" name="105">  105   </a>    <span class="KW">break</span>;
+</span><span><a class="LN" name="106">  106   </a>
+</span><span><a class="LN" name="107">  107   </a>   <span class="KW">case</span> RISING_ZERO_CROSSING:
+</span><span><a class="LN" name="108">  108   </a>    zcsDir = SL_ZCS_EVENT_ALL_UP;
+</span><span><a class="LN" name="109">  109   </a>    <span class="KW">break</span>;
+</span><span><a class="LN" name="110">  110   </a>
+</span><span><a class="LN" name="111">  111   </a>   <span class="KW">default</span>:
+</span><span><a class="LN" name="112">  112   </a>    zcsDir = SL_ZCS_EVENT_NUL;
+</span><span><a class="LN" name="113">  113   </a>    <span class="KW">break</span>;
+</span><span><a class="LN" name="114">  114   </a>  <b>}</b>
+</span><span><a class="LN" name="115">  115   </a>
+</span><span><a class="LN" name="116">  116   </a>  <span class="CT">/*had event, check if double zc happend remove double detection. */</span>
+</span><span><a class="LN" name="117">  117   </a>  <span class="KW">if</span> (slZcHadEvent(currEv, zcsDir)) <b>{</b>
+</span><span><a class="LN" name="118">  118   </a>    currEv = (slZcEventType)(slZcUnAliasEvents(prevEv, currEv));
+</span><span><a class="LN" name="119">  119   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="120">  120   </a>    currEv = SL_ZCS_EVENT_NUL;
+</span><span><a class="LN" name="121">  121   </a>  <b>}</b>
+</span><span><a class="LN" name="122">  122   </a>
+</span><span><a class="LN" name="123">  123   </a>  <span class="CT">/* Update prevZc */</span>
+</span><span><a class="LN" name="124">  124   </a>  tempEv = (slZcEventType)(currEv &lt;&lt; 2);<span class="CT">/* shift left by 2 bits */</span>
+</span><span><a class="LN" name="125">  125   </a>  *prevZc = (<a href="zero_crossing_types_h.html#type_ZCSigState" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ZCSigState');" target="_self"><font color="#1122aa">ZCSigState</font></a>)((currSign) | (tempEv));
+</span><span><a class="LN" name="126">  126   </a>  <span class="KW">if</span> ((currEv &amp; SL_ZCS_EVENT_ALL_DN) != 0) <b>{</b>
+</span><span><a class="LN" name="127">  127   </a>    zcEvent = FALLING_ZCEVENT;
+</span><span><a class="LN" name="128">  128   </a>  <b>}</b> <span class="KW">else</span> <span class="KW">if</span> ((currEv &amp; SL_ZCS_EVENT_ALL_UP) != 0) <b>{</b>
+</span><span><a class="LN" name="129">  129   </a>    zcEvent = RISING_ZCEVENT;
+</span><span><a class="LN" name="130">  130   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="131">  131   </a>    zcEvent = NO_ZCEVENT;
+</span><span><a class="LN" name="132">  132   </a>  <b>}</b>
+</span><span><a class="LN" name="133">  133   </a>
+</span><span><a class="LN" name="134">  134   </a>  <span class="KW">return</span> zcEvent;
+</span><span><a class="LN" name="135">  135   </a><b>}</b>                                      <span class="CT">/* rt_ZCFcn */</span>
+</span><span><a class="LN" name="136">  136   </a>
+</span><span><a class="LN" name="137">  137   </a><span class="CT">/* Model step function */</span>
+</span><span><a class="LN" name="138">  138   </a><span class="DT">void</span> <a name="fcn_PARQUEADERO_MODELO_step">PARQUEADERO_MODELO_step</a>(<span class="DT">void</span>)
+</span><span><a class="LN" name="139">  139   </a><b>{</b>
+</span><span><a class="LN" name="140">  140   </a>  <a href="rtwtypes_h.html#type_int32_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_int32_T');" target="_self"><font color="#1122aa">int32_T</font></a> rtb_PulseGenerator;
+</span><span><a class="LN" name="141">  141   </a>  <a href="zero_crossing_types_h.html#type_ZCEventType" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ZCEventType');" target="_self"><font color="#1122aa">ZCEventType</font></a> zcEvent;
+</span><span><a class="LN" name="142">  142   </a>
+</span><span><a class="LN" name="143">  143   </a>  <span class="CT">/* DiscretePulseGenerator: '&lt;S1&gt;/Pulse Generator' */</span>
+</span><span><a class="LN" name="144">  144   </a>  rtb_PulseGenerator = ((<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.clockTickCounter &lt; 1) &amp;&amp; (<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.clockTickCounter &gt;=
+</span><span><a class="LN" name="145">  145   </a>    0));
+</span><span><a class="LN" name="146">  146   </a>  <span class="KW">if</span> (<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.clockTickCounter &gt;= 19) <b>{</b>
+</span><span><a class="LN" name="147">  147   </a>    <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.clockTickCounter = 0;
+</span><span><a class="LN" name="148">  148   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="149">  149   </a>    <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.clockTickCounter++;
+</span><span><a class="LN" name="150">  150   </a>  <b>}</b>
+</span><span><a class="LN" name="151">  151   </a>
+</span><span><a class="LN" name="152">  152   </a>  <span class="CT">/* End of DiscretePulseGenerator: '&lt;S1&gt;/Pulse Generator' */</span>
+</span><span><a class="LN" name="153">  153   </a>
+</span><span><a class="LN" name="154">  154   </a>  <span class="CT">/* Chart: '&lt;S1&gt;/Chart' incorporates:</span>
+</span><span><a class="LN" name="155">  155   </a><span class="CT">   *  TriggerPort: '&lt;S2&gt;/CLOCK'</span>
+</span><span><a class="LN" name="156">  156   </a><span class="CT">   */</span>
+</span><span><a class="LN" name="157">  157   </a>  zcEvent = <a href="#fcn_rt_ZCFcn" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rt_ZCFcn');" target="_self"><font color="#1122aa">rt_ZCFcn</font></a>(ANY_ZERO_CROSSING,&amp;<a href="#var_rtPrevZCX" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtPrevZCX');" target="_self"><font color="#1122aa">rtPrevZCX</font></a>.Chart_Trig_ZCE,
+</span><span><a class="LN" name="158">  158   </a>                     ((<a href="rtwtypes_h.html#type_real_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_real_T');" target="_self"><font color="#1122aa">real_T</font></a>)rtb_PulseGenerator));
+</span><span><a class="LN" name="159">  159   </a>  <span class="KW">if</span> (zcEvent != NO_ZCEVENT) <b>{</b>
+</span><span><a class="LN" name="160">  160   </a>    <span class="KW">if</span> (<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_active_c3_PARQUEADERO_MODELO == 0U) <b>{</b>
+</span><span><a class="LN" name="161">  161   </a>      <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_active_c3_PARQUEADERO_MODELO = 1U;
+</span><span><a class="LN" name="162">  162   </a>      <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_PARQUEADERO_MODELO = IN_inicio_;
+</span><span><a class="LN" name="163">  163   </a>      <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.numero_coches = 0.0;
+</span><span><a class="LN" name="164">  164   </a>
+</span><span><a class="LN" name="165">  165   </a>      <span class="CT">/* Outport: '&lt;Root&gt;/coches' */</span>
+</span><span><a class="LN" name="166">  166   </a>      <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.coches = 0.0;
+</span><span><a class="LN" name="167">  167   </a>
+</span><span><a class="LN" name="168">  168   </a>      <span class="CT">/* Outport: '&lt;Root&gt;/MOTOR' */</span>
+</span><span><a class="LN" name="169">  169   </a>      <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.MOTOR = 0.0;
+</span><span><a class="LN" name="170">  170   </a>
+</span><span><a class="LN" name="171">  171   </a>      <span class="CT">/* Outport: '&lt;Root&gt;/ST_PARKIN' */</span>
+</span><span><a class="LN" name="172">  172   </a>      <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST_PARKIN = 1.0;
+</span><span><a class="LN" name="173">  173   </a>      <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.ON_OFF = 1.0;
+</span><span><a class="LN" name="174">  174   </a>    <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="175">  175   </a>      <span class="KW">switch</span> (<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_PARQUEADERO_MODELO) <b>{</b>
+</span><span><a class="LN" name="176">  176   </a>       <span class="KW">case</span> IN_LIBRE:
+</span><span><a class="LN" name="177">  177   </a>        <span class="KW">if</span> (<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.ON_OFF == 0.0) <b>{</b>
+</span><span><a class="LN" name="178">  178   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_LIBRE = IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="179">  179   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_PARQUEADERO_MODELO = IN_OCUPADO;
+</span><span><a class="LN" name="180">  180   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_OCUPADO = IN_inicio;
+</span><span><a class="LN" name="181">  181   </a>
+</span><span><a class="LN" name="182">  182   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/ST_PARKIN' */</span>
+</span><span><a class="LN" name="183">  183   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST_PARKIN = 0.0;
+</span><span><a class="LN" name="184">  184   </a>
+</span><span><a class="LN" name="185">  185   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/MOTOR' */</span>
+</span><span><a class="LN" name="186">  186   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.MOTOR = 0.0;
+</span><span><a class="LN" name="187">  187   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="188">  188   </a>          <span class="KW">switch</span> (<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_LIBRE) <b>{</b>
+</span><span><a class="LN" name="189">  189   </a>           <span class="KW">case</span> IN_CERRAR_PUERTA:
+</span><span><a class="LN" name="190">  190   </a>            <span class="CT">/* Outport: '&lt;Root&gt;/MOTOR' */</span>
+</span><span><a class="LN" name="191">  191   </a>            <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.MOTOR = 0.0;
+</span><span><a class="LN" name="192">  192   </a>            <span class="KW">if</span> (<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.numero_coches == 10.0) <b>{</b>
+</span><span><a class="LN" name="193">  193   </a>              <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_LIBRE = IN_paso_ocupado;
+</span><span><a class="LN" name="194">  194   </a>              <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.ON_OFF = 0.0;
+</span><span><a class="LN" name="195">  195   </a>            <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="196">  196   </a>              <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_LIBRE = IN_inicio_f;
+</span><span><a class="LN" name="197">  197   </a>
+</span><span><a class="LN" name="198">  198   </a>              <span class="CT">/* Outport: '&lt;Root&gt;/ST_PARKIN' */</span>
+</span><span><a class="LN" name="199">  199   </a>              <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST_PARKIN = 0.0;
+</span><span><a class="LN" name="200">  200   </a>
+</span><span><a class="LN" name="201">  201   </a>              <span class="CT">/* Outport: '&lt;Root&gt;/MOTOR' */</span>
+</span><span><a class="LN" name="202">  202   </a>              <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.MOTOR = 0.0;
+</span><span><a class="LN" name="203">  203   </a>            <b>}</b>
+</span><span><a class="LN" name="204">  204   </a>            <span class="KW">break</span>;
+</span><span><a class="LN" name="205">  205   </a>
+</span><span><a class="LN" name="206">  206   </a>           <span class="KW">case</span> IN_RESTAR_COCHES:
+</span><span><a class="LN" name="207">  207   </a>            <span class="CT">/* Inport: '&lt;Root&gt;/E_SEN' */</span>
+</span><span><a class="LN" name="208">  208   </a>            <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.E_SEN == 0.0) <b>{</b>
+</span><span><a class="LN" name="209">  209   </a>              <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_LIBRE = IN_inicio_f;
+</span><span><a class="LN" name="210">  210   </a>
+</span><span><a class="LN" name="211">  211   </a>              <span class="CT">/* Outport: '&lt;Root&gt;/ST_PARKIN' */</span>
+</span><span><a class="LN" name="212">  212   </a>              <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST_PARKIN = 0.0;
+</span><span><a class="LN" name="213">  213   </a>
+</span><span><a class="LN" name="214">  214   </a>              <span class="CT">/* Outport: '&lt;Root&gt;/MOTOR' */</span>
+</span><span><a class="LN" name="215">  215   </a>              <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.MOTOR = 0.0;
+</span><span><a class="LN" name="216">  216   </a>            <b>}</b>
+</span><span><a class="LN" name="217">  217   </a>            <span class="KW">break</span>;
+</span><span><a class="LN" name="218">  218   </a>
+</span><span><a class="LN" name="219">  219   </a>           <span class="KW">case</span> IN_SUMAR_COCHES1:
+</span><span><a class="LN" name="220">  220   </a>            <span class="CT">/* Outport: '&lt;Root&gt;/MOTOR' */</span>
+</span><span><a class="LN" name="221">  221   </a>            <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.MOTOR = 1.0;
+</span><span><a class="LN" name="222">  222   </a>
+</span><span><a class="LN" name="223">  223   </a>            <span class="CT">/* Inport: '&lt;Root&gt;/A_SEN' */</span>
+</span><span><a class="LN" name="224">  224   </a>            <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.A_SEN == 0.0) <b>{</b>
+</span><span><a class="LN" name="225">  225   </a>              <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_LIBRE = IN_CERRAR_PUERTA;
+</span><span><a class="LN" name="226">  226   </a>
+</span><span><a class="LN" name="227">  227   </a>              <span class="CT">/* Outport: '&lt;Root&gt;/MOTOR' */</span>
+</span><span><a class="LN" name="228">  228   </a>              <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.MOTOR = 0.0;
+</span><span><a class="LN" name="229">  229   </a>            <b>}</b>
+</span><span><a class="LN" name="230">  230   </a>            <span class="KW">break</span>;
+</span><span><a class="LN" name="231">  231   </a>
+</span><span><a class="LN" name="232">  232   </a>           <span class="KW">case</span> IN_inicio_f:
+</span><span><a class="LN" name="233">  233   </a>            <span class="CT">/* Outport: '&lt;Root&gt;/ST_PARKIN' */</span>
+</span><span><a class="LN" name="234">  234   </a>            <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST_PARKIN = 0.0;
+</span><span><a class="LN" name="235">  235   </a>
+</span><span><a class="LN" name="236">  236   </a>            <span class="CT">/* Outport: '&lt;Root&gt;/MOTOR' */</span>
+</span><span><a class="LN" name="237">  237   </a>            <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.MOTOR = 0.0;
+</span><span><a class="LN" name="238">  238   </a>
+</span><span><a class="LN" name="239">  239   </a>            <span class="CT">/* Inport: '&lt;Root&gt;/E_SEN' incorporates:</span>
+</span><span><a class="LN" name="240">  240   </a><span class="CT">             *  Inport: '&lt;Root&gt;/A_SEN'</span>
+</span><span><a class="LN" name="241">  241   </a><span class="CT">             */</span>
+</span><span><a class="LN" name="242">  242   </a>            <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.E_SEN == 1.0) <b>{</b>
+</span><span><a class="LN" name="243">  243   </a>              <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_LIBRE = IN_RESTAR_COCHES;
+</span><span><a class="LN" name="244">  244   </a>              <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.numero_coches--;
+</span><span><a class="LN" name="245">  245   </a>
+</span><span><a class="LN" name="246">  246   </a>              <span class="CT">/* Outport: '&lt;Root&gt;/coches' */</span>
+</span><span><a class="LN" name="247">  247   </a>              <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.coches = <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.numero_coches;
+</span><span><a class="LN" name="248">  248   </a>            <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="249">  249   </a>              <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.A_SEN == 1.0) <b>{</b>
+</span><span><a class="LN" name="250">  250   </a>                <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_LIBRE = IN_SUMAR_COCHES1;
+</span><span><a class="LN" name="251">  251   </a>                <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.numero_coches++;
+</span><span><a class="LN" name="252">  252   </a>
+</span><span><a class="LN" name="253">  253   </a>                <span class="CT">/* Outport: '&lt;Root&gt;/coches' */</span>
+</span><span><a class="LN" name="254">  254   </a>                <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.coches = <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.numero_coches;
+</span><span><a class="LN" name="255">  255   </a>
+</span><span><a class="LN" name="256">  256   </a>                <span class="CT">/* Outport: '&lt;Root&gt;/MOTOR' */</span>
+</span><span><a class="LN" name="257">  257   </a>                <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.MOTOR = 1.0;
+</span><span><a class="LN" name="258">  258   </a>              <b>}</b>
+</span><span><a class="LN" name="259">  259   </a>            <b>}</b>
+</span><span><a class="LN" name="260">  260   </a>            <span class="KW">break</span>;
+</span><span><a class="LN" name="261">  261   </a>
+</span><span><a class="LN" name="262">  262   </a>           <span class="KW">default</span>:
+</span><span><a class="LN" name="263">  263   </a>            <span class="CT">/* case IN_paso_ocupado: */</span>
+</span><span><a class="LN" name="264">  264   </a>            <span class="KW">break</span>;
+</span><span><a class="LN" name="265">  265   </a>          <b>}</b>
+</span><span><a class="LN" name="266">  266   </a>        <b>}</b>
+</span><span><a class="LN" name="267">  267   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="268">  268   </a>
+</span><span><a class="LN" name="269">  269   </a>       <span class="KW">case</span> IN_OCUPADO:
+</span><span><a class="LN" name="270">  270   </a>        <span class="KW">if</span> (<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.ON_OFF == 1.0) <b>{</b>
+</span><span><a class="LN" name="271">  271   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_OCUPADO = IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="272">  272   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_PARQUEADERO_MODELO = IN_LIBRE;
+</span><span><a class="LN" name="273">  273   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_LIBRE = IN_inicio_f;
+</span><span><a class="LN" name="274">  274   </a>
+</span><span><a class="LN" name="275">  275   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/ST_PARKIN' */</span>
+</span><span><a class="LN" name="276">  276   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST_PARKIN = 0.0;
+</span><span><a class="LN" name="277">  277   </a>
+</span><span><a class="LN" name="278">  278   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/MOTOR' */</span>
+</span><span><a class="LN" name="279">  279   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.MOTOR = 0.0;
+</span><span><a class="LN" name="280">  280   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="281">  281   </a>          <span class="KW">switch</span> (<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_OCUPADO) <b>{</b>
+</span><span><a class="LN" name="282">  282   </a>           <span class="KW">case</span> IN_PASO_LIBRE:
+</span><span><a class="LN" name="283">  283   </a>            <span class="KW">break</span>;
+</span><span><a class="LN" name="284">  284   </a>
+</span><span><a class="LN" name="285">  285   </a>           <span class="KW">case</span> IN_RESTAR_COCHES:
+</span><span><a class="LN" name="286">  286   </a>            <span class="CT">/* Inport: '&lt;Root&gt;/E_SEN' */</span>
+</span><span><a class="LN" name="287">  287   </a>            <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.E_SEN == 0.0) <b>{</b>
+</span><span><a class="LN" name="288">  288   </a>              <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_OCUPADO = IN_PASO_LIBRE;
+</span><span><a class="LN" name="289">  289   </a>              <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.ON_OFF = 1.0;
+</span><span><a class="LN" name="290">  290   </a>            <b>}</b>
+</span><span><a class="LN" name="291">  291   </a>            <span class="KW">break</span>;
+</span><span><a class="LN" name="292">  292   </a>
+</span><span><a class="LN" name="293">  293   </a>           <span class="KW">default</span>:
+</span><span><a class="LN" name="294">  294   </a>            <span class="CT">/* Outport: '&lt;Root&gt;/ST_PARKIN' */</span>
+</span><span><a class="LN" name="295">  295   </a>            <span class="CT">/* case IN_inicio: */</span>
+</span><span><a class="LN" name="296">  296   </a>            <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST_PARKIN = 0.0;
+</span><span><a class="LN" name="297">  297   </a>
+</span><span><a class="LN" name="298">  298   </a>            <span class="CT">/* Outport: '&lt;Root&gt;/MOTOR' */</span>
+</span><span><a class="LN" name="299">  299   </a>            <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.MOTOR = 0.0;
+</span><span><a class="LN" name="300">  300   </a>
+</span><span><a class="LN" name="301">  301   </a>            <span class="CT">/* Inport: '&lt;Root&gt;/E_SEN' */</span>
+</span><span><a class="LN" name="302">  302   </a>            <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.E_SEN == 1.0) <b>{</b>
+</span><span><a class="LN" name="303">  303   </a>              <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_OCUPADO = IN_RESTAR_COCHES;
+</span><span><a class="LN" name="304">  304   </a>              <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.numero_coches--;
+</span><span><a class="LN" name="305">  305   </a>
+</span><span><a class="LN" name="306">  306   </a>              <span class="CT">/* Outport: '&lt;Root&gt;/coches' */</span>
+</span><span><a class="LN" name="307">  307   </a>              <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.coches = <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.numero_coches;
+</span><span><a class="LN" name="308">  308   </a>            <b>}</b>
+</span><span><a class="LN" name="309">  309   </a>            <span class="KW">break</span>;
+</span><span><a class="LN" name="310">  310   </a>          <b>}</b>
+</span><span><a class="LN" name="311">  311   </a>        <b>}</b>
+</span><span><a class="LN" name="312">  312   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="313">  313   </a>
+</span><span><a class="LN" name="314">  314   </a>       <span class="KW">default</span>:
+</span><span><a class="LN" name="315">  315   </a>        <span class="CT">/* case IN_inicio_: */</span>
+</span><span><a class="LN" name="316">  316   </a>        <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_PARQUEADERO_MODELO = IN_LIBRE;
+</span><span><a class="LN" name="317">  317   </a>        <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_LIBRE = IN_inicio_f;
+</span><span><a class="LN" name="318">  318   </a>
+</span><span><a class="LN" name="319">  319   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/ST_PARKIN' */</span>
+</span><span><a class="LN" name="320">  320   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST_PARKIN = 0.0;
+</span><span><a class="LN" name="321">  321   </a>
+</span><span><a class="LN" name="322">  322   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/MOTOR' */</span>
+</span><span><a class="LN" name="323">  323   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.MOTOR = 0.0;
+</span><span><a class="LN" name="324">  324   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="325">  325   </a>      <b>}</b>
+</span><span><a class="LN" name="326">  326   </a>    <b>}</b>
+</span><span><a class="LN" name="327">  327   </a>  <b>}</b>
+</span><span><a class="LN" name="328">  328   </a><b>}</b>
+</span><span><a class="LN" name="329">  329   </a>
+</span><span><a class="LN" name="330">  330   </a><span class="CT">/* Model initialize function */</span>
+</span><span><a class="LN" name="331">  331   </a><span class="DT">void</span> <a name="fcn_PARQUEADERO_MODELO_initialize">PARQUEADERO_MODELO_initialize</a>(<span class="DT">void</span>)
+</span><span><a class="LN" name="332">  332   </a><b>{</b>
+</span><span><a class="LN" name="333">  333   </a>  <a href="#var_rtPrevZCX" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtPrevZCX');" target="_self"><font color="#1122aa">rtPrevZCX</font></a>.Chart_Trig_ZCE = UNINITIALIZED_ZCSIG;
+</span><span><a class="LN" name="334">  334   </a><b>}</b>
+</span><span><a class="LN" name="335">  335   </a>
+</span><span><a class="LN" name="336">  336   </a><span class="CT">/*</span>
+</span><span><a class="LN" name="337">  337   </a><span class="CT"> * File trailer for generated code.</span>
+</span><span><a class="LN" name="338">  338   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="339">  339   </a><span class="CT"> * [EOF]</span>
+</span><span><a class="LN" name="340">  340   </a><span class="CT"> */</span>
+</span><span><a class="LN" name="341">  341   </a>
+</span></pre>
+</td></tr></table>
+</p>
+</body>
+</html>

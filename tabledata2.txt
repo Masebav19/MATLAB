@@ -1,0 +1,4 @@
+nombre,edad,altura
+Mateo,27,1.7
+Maria,25,1.65
+Cristina,26,1.8

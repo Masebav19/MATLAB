@@ -1,0 +1,17 @@
+.Parqueadero_140,
+.Parqueadero_141,
+.Parqueadero_142,
+.Parqueadero_143,
+.Parqueadero_144,
+.Parqueadero_145,
+.Parqueadero_146,
+.Parqueadero_147 { background-image: url('Parqueadero_14_icons.png'); width: 16px; height: 16px; }
+
+.Parqueadero_140 { background-position: -0px; }
+.Parqueadero_141 { background-position: -16px; }
+.Parqueadero_142 { background-position: -32px; }
+.Parqueadero_143 { background-position: -48px; }
+.Parqueadero_144 { background-position: -64px; }
+.Parqueadero_145 { background-position: -80px; }
+.Parqueadero_146 { background-position: -96px; }
+.Parqueadero_147 { background-position: -112px; }

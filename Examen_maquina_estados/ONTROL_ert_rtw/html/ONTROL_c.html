@@ -1,0 +1,625 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>RTW Report - ONTROL.c</title>
+<link rel="stylesheet" type="text/css" href="rtwreport.css"></link><script language="JavaScript" type="text/javascript" src="rtwreport_utils.js"></script>
+<SCRIPT type="text/javascript" src="rtwannotate.js"></SCRIPT>
+</head>
+<body bgcolor="#eeeeee" onload="try {if (top) { if (top.rtwFileOnLoad) top.rtwFileOnLoad(window.document); else local_onload();}} catch(err) {};if (typeof rtwannotate === 'function') {rtwannotate('ONTROL_c_cov.xml');}">
+<p>
+<table border="0" cellspacing="0" cellpadding="6" width="100%%" height="100%%"><tr><td width="100%%" valign="top" bgcolor="#ffffff">
+<h4>File: <a href="../ONTROL.c" target="rtwreport_document_frame" id="linkToText_plain">ONTROL.c</a></h4>
+<pre id="RTWcode">
+<span><a class="LN" name="1">    1   </a><span class="CT">/*</span>
+</span><span><a class="LN" name="2">    2   </a><span class="CT"> * Academic License - for use in teaching, academic research, and meeting</span>
+</span><span><a class="LN" name="3">    3   </a><span class="CT"> * course requirements at degree granting institutions only.  Not for</span>
+</span><span><a class="LN" name="4">    4   </a><span class="CT"> * government, commercial, or other organizational use.</span>
+</span><span><a class="LN" name="5">    5   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="6">    6   </a><span class="CT"> * File: ONTROL.c</span>
+</span><span><a class="LN" name="7">    7   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="8">    8   </a><span class="CT"> * Code generated for Simulink model 'ONTROL'.</span>
+</span><span><a class="LN" name="9">    9   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="10">   10   </a><span class="CT"> * Model version                  : 1.0</span>
+</span><span><a class="LN" name="11">   11   </a><span class="CT"> * Simulink Coder version         : 9.4 (R2020b) 29-Jul-2020</span>
+</span><span><a class="LN" name="12">   12   </a><span class="CT"> * C/C++ source code generated on : Wed Jul 27 16:30:47 2022</span>
+</span><span><a class="LN" name="13">   13   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="14">   14   </a><span class="CT"> * Target selection: ert.tlc</span>
+</span><span><a class="LN" name="15">   15   </a><span class="CT"> * Embedded hardware selection: Intel-&gt;x86-64 (Windows64)</span>
+</span><span><a class="LN" name="16">   16   </a><span class="CT"> * Code generation objectives:</span>
+</span><span><a class="LN" name="17">   17   </a><span class="CT"> *    1. Execution efficiency</span>
+</span><span><a class="LN" name="18">   18   </a><span class="CT"> *    2. RAM efficiency</span>
+</span><span><a class="LN" name="19">   19   </a><span class="CT"> * Validation result: Not run</span>
+</span><span><a class="LN" name="20">   20   </a><span class="CT"> */</span>
+</span><span><a class="LN" name="21">   21   </a>
+</span><span><a class="LN" name="22">   22   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;ONTROL.h&quot;</font>
+</span><span><a class="LN" name="23">   23   </a>
+</span><span><a class="LN" name="24">   24   </a><span class="CT">/* Named constants for Chart: '&lt;S1&gt;/Chart' */</span>
+</span><span><a class="LN" name="25">   25   </a><font color="#992211">#</font><span class="PP">define</span> IN_INICIO                      ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)1U)
+</span><span><a class="LN" name="26">   26   </a><font color="#992211">#</font><span class="PP">define</span> IN_PARQ1_OFF                   ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)2U)
+</span><span><a class="LN" name="27">   27   </a><font color="#992211">#</font><span class="PP">define</span> IN_PARQ1_ON                    ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)3U)
+</span><span><a class="LN" name="28">   28   </a><font color="#992211">#</font><span class="PP">define</span> IN_PARQ2_OFF                   ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)4U)
+</span><span><a class="LN" name="29">   29   </a><font color="#992211">#</font><span class="PP">define</span> IN_PARQ2_ON                    ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)5U)
+</span><span><a class="LN" name="30">   30   </a><font color="#992211">#</font><span class="PP">define</span> IN_PARQ3_OFF                   ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)6U)
+</span><span><a class="LN" name="31">   31   </a><font color="#992211">#</font><span class="PP">define</span> IN_PARQ3_ON                    ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)7U)
+</span><span><a class="LN" name="32">   32   </a><font color="#992211">#</font><span class="PP">define</span> IN_PARQ4_OFF                   ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)8U)
+</span><span><a class="LN" name="33">   33   </a><font color="#992211">#</font><span class="PP">define</span> IN_PARQ4_ON                    ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)9U)
+</span><span><a class="LN" name="34">   34   </a><font color="#992211">#</font><span class="PP">define</span> IN_PARQ5_OFF                   ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)10U)
+</span><span><a class="LN" name="35">   35   </a><font color="#992211">#</font><span class="PP">define</span> IN_PARQ5_ON                    ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)11U)
+</span><span><a class="LN" name="36">   36   </a><font color="#992211">#</font><span class="PP">define</span> IN_abrir                       ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)12U)
+</span><span><a class="LN" name="37">   37   </a><font color="#992211">#</font><span class="PP">define</span> IN_abrir1                      ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)13U)
+</span><span><a class="LN" name="38">   38   </a><font color="#992211">#</font><span class="PP">define</span> IN_aumentar                    ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)14U)
+</span><span><a class="LN" name="39">   39   </a><font color="#992211">#</font><span class="PP">define</span> IN_disminuir                   ((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)15U)
+</span><span><a class="LN" name="40">   40   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;solver_zc.h&quot;</font>
+</span><span><a class="LN" name="41">   41   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;zero_crossing_types.h&quot;</font>
+</span><span><a class="LN" name="42">   42   </a><font color="#992211">#</font><span class="PP">ifndef</span> slZcHadEvent
+</span><span><a class="LN" name="43">   43   </a><font color="#992211">#</font><span class="PP">define</span> slZcHadEvent(ev, zcsDir)       (((ev) &amp; (zcsDir)) != 0x00 )
+</span><span><a class="LN" name="44">   44   </a><font color="#992211">#</font><span class="PP">endif</span>
+</span><span><a class="LN" name="45">   45   </a>
+</span><span><a class="LN" name="46">   46   </a><font color="#992211">#</font><span class="PP">ifndef</span> slZcUnAliasEvents
+</span><span><a class="LN" name="47">   47   </a><font color="#992211">#</font><span class="PP">define</span> slZcUnAliasEvents(evL, evR)    ((((slZcHadEvent((evL), (SL_ZCS_EVENT_N2Z)) &amp;&amp; slZcHadEvent((evR), (SL_ZCS_EVENT_Z2P))) || (slZcHadEvent((evL), (SL_ZCS_EVENT_P2Z)) &amp;&amp; slZcHadEvent((evR), (SL_ZCS_EVENT_Z2N)))) ? (SL_ZCS_EVENT_NUL) : (evR)))
+</span><span><a class="LN" name="48">   48   </a><font color="#992211">#</font><span class="PP">endif</span>
+</span><span><a class="LN" name="49">   49   </a>
+</span><span><a class="LN" name="50">   50   </a><span class="CT">/* Block signals and states (default storage) */</span>
+</span><span><a class="LN" name="51">   51   </a><a href="ONTROL_h.html#type_DW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW');" target="_self"><font color="#1122aa">DW</font></a> <a name="var_rtDW">rtDW</a>;
+</span><span><a class="LN" name="52">   52   </a>
+</span><span><a class="LN" name="53">   53   </a><span class="CT">/* Previous zero-crossings (trigger) states */</span>
+</span><span><a class="LN" name="54">   54   </a><a href="ONTROL_h.html#type_PrevZCX" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_PrevZCX');" target="_self"><font color="#1122aa">PrevZCX</font></a> <a name="var_rtPrevZCX">rtPrevZCX</a>;
+</span><span><a class="LN" name="55">   55   </a>
+</span><span><a class="LN" name="56">   56   </a><span class="CT">/* External inputs (root inport signals with default storage) */</span>
+</span><span><a class="LN" name="57">   57   </a><a href="ONTROL_h.html#type_ExtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ExtU');" target="_self"><font color="#1122aa">ExtU</font></a> <a name="var_rtU">rtU</a>;
+</span><span><a class="LN" name="58">   58   </a>
+</span><span><a class="LN" name="59">   59   </a><span class="CT">/* External outputs (root outports fed by signals with default storage) */</span>
+</span><span><a class="LN" name="60">   60   </a><a href="ONTROL_h.html#type_ExtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ExtY');" target="_self"><font color="#1122aa">ExtY</font></a> <a name="var_rtY">rtY</a>;
+</span><span><a class="LN" name="61">   61   </a>
+</span><span><a class="LN" name="62">   62   </a><span class="CT">/* Real-time model */</span>
+</span><span><a class="LN" name="63">   63   </a><span class="DT">static</span> <a href="ONTROL_h.html#type_RT_MODEL" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_RT_MODEL');" target="_self"><font color="#1122aa">RT_MODEL</font></a> <a name="var_rtM_">rtM_</a>;
+</span><span><a class="LN" name="64">   64   </a><a href="ONTROL_h.html#type_RT_MODEL" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_RT_MODEL');" target="_self"><font color="#1122aa">RT_MODEL</font></a> *<span class="DT">const</span> <a name="var_rtM">rtM</a> = &amp;<a href="#var_rtM_" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtM_');" target="_self"><font color="#1122aa">rtM_</font></a>;
+</span><span><a class="LN" name="65">   65   </a><span class="DT">static</span> <a href="zero_crossing_types_h.html#type_ZCEventType" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ZCEventType');" target="_self"><font color="#1122aa">ZCEventType</font></a> <a href="#fcn_rt_ZCFcn" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rt_ZCFcn');" target="_self"><font color="#1122aa">rt_ZCFcn</font></a>(<a href="zero_crossing_types_h.html#type_ZCDirection" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ZCDirection');" target="_self"><font color="#1122aa">ZCDirection</font></a> zcDir, <a href="zero_crossing_types_h.html#type_ZCSigState" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ZCSigState');" target="_self"><font color="#1122aa">ZCSigState</font></a> *prevZc, <a href="rtwtypes_h.html#type_real_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_real_T');" target="_self"><font color="#1122aa">real_T</font></a>
+</span><span><a class="LN" name="66">   66   </a>  currValue);
+</span><span><a class="LN" name="67">   67   </a>
+</span><span><a class="LN" name="68">   68   </a><span class="CT">/* Detect zero crossings events. */</span>
+</span><span><a class="LN" name="69">   69   </a><span class="DT">static</span> <a href="zero_crossing_types_h.html#type_ZCEventType" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ZCEventType');" target="_self"><font color="#1122aa">ZCEventType</font></a> <a name="fcn_rt_ZCFcn">rt_ZCFcn</a>(<a href="zero_crossing_types_h.html#type_ZCDirection" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ZCDirection');" target="_self"><font color="#1122aa">ZCDirection</font></a> zcDir, <a href="zero_crossing_types_h.html#type_ZCSigState" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ZCSigState');" target="_self"><font color="#1122aa">ZCSigState</font></a>* prevZc, <a href="rtwtypes_h.html#type_real_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_real_T');" target="_self"><font color="#1122aa">real_T</font></a>
+</span><span><a class="LN" name="70">   70   </a>  currValue)
+</span><span><a class="LN" name="71">   71   </a><b>{</b>
+</span><span><a class="LN" name="72">   72   </a>  slZcEventType zcsDir;
+</span><span><a class="LN" name="73">   73   </a>  slZcEventType tempEv;
+</span><span><a class="LN" name="74">   74   </a>  <a href="zero_crossing_types_h.html#type_ZCEventType" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ZCEventType');" target="_self"><font color="#1122aa">ZCEventType</font></a> zcEvent = NO_ZCEVENT;    <span class="CT">/* assume */</span>
+</span><span><a class="LN" name="75">   75   </a>
+</span><span><a class="LN" name="76">   76   </a>  <span class="CT">/* zcEvent matrix */</span>
+</span><span><a class="LN" name="77">   77   </a>  <span class="DT">static</span> <span class="DT">const</span> slZcEventType eventMatrix[4][4] = <b>{</b>
+</span><span><a class="LN" name="78">   78   </a>    <span class="CT">/*          ZER              POS              NEG              UNK */</span>
+</span><span><a class="LN" name="79">   79   </a>    <b>{</b> SL_ZCS_EVENT_NUL, SL_ZCS_EVENT_Z2P, SL_ZCS_EVENT_Z2N, SL_ZCS_EVENT_NUL <b>}</b>,<span class="CT">/* ZER */</span>
+</span><span><a class="LN" name="80">   80   </a>
+</span><span><a class="LN" name="81">   81   </a>    <b>{</b> SL_ZCS_EVENT_P2Z, SL_ZCS_EVENT_NUL, SL_ZCS_EVENT_P2N, SL_ZCS_EVENT_NUL <b>}</b>,<span class="CT">/* POS */</span>
+</span><span><a class="LN" name="82">   82   </a>
+</span><span><a class="LN" name="83">   83   </a>    <b>{</b> SL_ZCS_EVENT_N2Z, SL_ZCS_EVENT_N2P, SL_ZCS_EVENT_NUL, SL_ZCS_EVENT_NUL <b>}</b>,<span class="CT">/* NEG */</span>
+</span><span><a class="LN" name="84">   84   </a>
+</span><span><a class="LN" name="85">   85   </a>    <b>{</b> SL_ZCS_EVENT_NUL, SL_ZCS_EVENT_NUL, SL_ZCS_EVENT_NUL, SL_ZCS_EVENT_NUL <b>}</b><span class="CT">/* UNK */</span>
+</span><span><a class="LN" name="86">   86   </a>  <b>}</b>;
+</span><span><a class="LN" name="87">   87   </a>
+</span><span><a class="LN" name="88">   88   </a>  <span class="CT">/* get prevZcEvent and prevZcSign from prevZc */</span>
+</span><span><a class="LN" name="89">   89   </a>  slZcEventType prevEv = (slZcEventType)(((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)(*prevZc)) &gt;&gt; 2);
+</span><span><a class="LN" name="90">   90   </a>  slZcSignalSignType prevSign = (slZcSignalSignType)(((<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)(*prevZc)) &amp;
+</span><span><a class="LN" name="91">   91   </a>    (<a href="rtwtypes_h.html#type_uint8_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_uint8_T');" target="_self"><font color="#1122aa">uint8_T</font></a>)0x03);
+</span><span><a class="LN" name="92">   92   </a>
+</span><span><a class="LN" name="93">   93   </a>  <span class="CT">/* get current zcSignal sign from current zcSignal value */</span>
+</span><span><a class="LN" name="94">   94   </a>  slZcSignalSignType currSign = (slZcSignalSignType)((currValue) &gt; 0.0 ?
+</span><span><a class="LN" name="95">   95   </a>    SL_ZCS_SIGN_POS :
+</span><span><a class="LN" name="96">   96   </a>    ((currValue) &lt; 0.0 ? SL_ZCS_SIGN_NEG : SL_ZCS_SIGN_ZERO));
+</span><span><a class="LN" name="97">   97   </a>
+</span><span><a class="LN" name="98">   98   </a>  <span class="CT">/* get current zcEvent based on prev and current zcSignal value */</span>
+</span><span><a class="LN" name="99">   99   </a>  slZcEventType currEv = eventMatrix[prevSign][currSign];
+</span><span><a class="LN" name="100">  100   </a>
+</span><span><a class="LN" name="101">  101   </a>  <span class="CT">/* get slZcEventType from ZCDirection */</span>
+</span><span><a class="LN" name="102">  102   </a>  <span class="KW">switch</span> (zcDir) <b>{</b>
+</span><span><a class="LN" name="103">  103   </a>   <span class="KW">case</span> ANY_ZERO_CROSSING:
+</span><span><a class="LN" name="104">  104   </a>    zcsDir = SL_ZCS_EVENT_ALL;
+</span><span><a class="LN" name="105">  105   </a>    <span class="KW">break</span>;
+</span><span><a class="LN" name="106">  106   </a>
+</span><span><a class="LN" name="107">  107   </a>   <span class="KW">case</span> FALLING_ZERO_CROSSING:
+</span><span><a class="LN" name="108">  108   </a>    zcsDir = SL_ZCS_EVENT_ALL_DN;
+</span><span><a class="LN" name="109">  109   </a>    <span class="KW">break</span>;
+</span><span><a class="LN" name="110">  110   </a>
+</span><span><a class="LN" name="111">  111   </a>   <span class="KW">case</span> RISING_ZERO_CROSSING:
+</span><span><a class="LN" name="112">  112   </a>    zcsDir = SL_ZCS_EVENT_ALL_UP;
+</span><span><a class="LN" name="113">  113   </a>    <span class="KW">break</span>;
+</span><span><a class="LN" name="114">  114   </a>
+</span><span><a class="LN" name="115">  115   </a>   <span class="KW">default</span>:
+</span><span><a class="LN" name="116">  116   </a>    zcsDir = SL_ZCS_EVENT_NUL;
+</span><span><a class="LN" name="117">  117   </a>    <span class="KW">break</span>;
+</span><span><a class="LN" name="118">  118   </a>  <b>}</b>
+</span><span><a class="LN" name="119">  119   </a>
+</span><span><a class="LN" name="120">  120   </a>  <span class="CT">/*had event, check if double zc happend remove double detection. */</span>
+</span><span><a class="LN" name="121">  121   </a>  <span class="KW">if</span> (slZcHadEvent(currEv, zcsDir)) <b>{</b>
+</span><span><a class="LN" name="122">  122   </a>    currEv = (slZcEventType)(slZcUnAliasEvents(prevEv, currEv));
+</span><span><a class="LN" name="123">  123   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="124">  124   </a>    currEv = SL_ZCS_EVENT_NUL;
+</span><span><a class="LN" name="125">  125   </a>  <b>}</b>
+</span><span><a class="LN" name="126">  126   </a>
+</span><span><a class="LN" name="127">  127   </a>  <span class="CT">/* Update prevZc */</span>
+</span><span><a class="LN" name="128">  128   </a>  tempEv = (slZcEventType)(currEv &lt;&lt; 2);<span class="CT">/* shift left by 2 bits */</span>
+</span><span><a class="LN" name="129">  129   </a>  *prevZc = (<a href="zero_crossing_types_h.html#type_ZCSigState" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ZCSigState');" target="_self"><font color="#1122aa">ZCSigState</font></a>)((currSign) | (tempEv));
+</span><span><a class="LN" name="130">  130   </a>  <span class="KW">if</span> ((currEv &amp; SL_ZCS_EVENT_ALL_DN) != 0) <b>{</b>
+</span><span><a class="LN" name="131">  131   </a>    zcEvent = FALLING_ZCEVENT;
+</span><span><a class="LN" name="132">  132   </a>  <b>}</b> <span class="KW">else</span> <span class="KW">if</span> ((currEv &amp; SL_ZCS_EVENT_ALL_UP) != 0) <b>{</b>
+</span><span><a class="LN" name="133">  133   </a>    zcEvent = RISING_ZCEVENT;
+</span><span><a class="LN" name="134">  134   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="135">  135   </a>    zcEvent = NO_ZCEVENT;
+</span><span><a class="LN" name="136">  136   </a>  <b>}</b>
+</span><span><a class="LN" name="137">  137   </a>
+</span><span><a class="LN" name="138">  138   </a>  <span class="KW">return</span> zcEvent;
+</span><span><a class="LN" name="139">  139   </a><b>}</b>                                      <span class="CT">/* rt_ZCFcn */</span>
+</span><span><a class="LN" name="140">  140   </a>
+</span><span><a class="LN" name="141">  141   </a><span class="CT">/* Model step function */</span>
+</span><span><a class="LN" name="142">  142   </a><span class="DT">void</span> <a name="fcn_ONTROL_step">ONTROL_step</a>(<span class="DT">void</span>)
+</span><span><a class="LN" name="143">  143   </a><b>{</b>
+</span><span><a class="LN" name="144">  144   </a>  <a href="rtwtypes_h.html#type_int32_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_int32_T');" target="_self"><font color="#1122aa">int32_T</font></a> rtb_PulseGenerator;
+</span><span><a class="LN" name="145">  145   </a>  <a href="rtwtypes_h.html#type_boolean_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_boolean_T');" target="_self"><font color="#1122aa">boolean_T</font></a> guard1 = false;
+</span><span><a class="LN" name="146">  146   </a>  <a href="rtwtypes_h.html#type_boolean_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_boolean_T');" target="_self"><font color="#1122aa">boolean_T</font></a> guard10 = false;
+</span><span><a class="LN" name="147">  147   </a>  <a href="rtwtypes_h.html#type_boolean_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_boolean_T');" target="_self"><font color="#1122aa">boolean_T</font></a> guard2 = false;
+</span><span><a class="LN" name="148">  148   </a>  <a href="rtwtypes_h.html#type_boolean_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_boolean_T');" target="_self"><font color="#1122aa">boolean_T</font></a> guard3 = false;
+</span><span><a class="LN" name="149">  149   </a>  <a href="rtwtypes_h.html#type_boolean_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_boolean_T');" target="_self"><font color="#1122aa">boolean_T</font></a> guard4 = false;
+</span><span><a class="LN" name="150">  150   </a>  <a href="rtwtypes_h.html#type_boolean_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_boolean_T');" target="_self"><font color="#1122aa">boolean_T</font></a> guard5 = false;
+</span><span><a class="LN" name="151">  151   </a>  <a href="rtwtypes_h.html#type_boolean_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_boolean_T');" target="_self"><font color="#1122aa">boolean_T</font></a> guard6 = false;
+</span><span><a class="LN" name="152">  152   </a>  <a href="rtwtypes_h.html#type_boolean_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_boolean_T');" target="_self"><font color="#1122aa">boolean_T</font></a> guard7 = false;
+</span><span><a class="LN" name="153">  153   </a>  <a href="rtwtypes_h.html#type_boolean_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_boolean_T');" target="_self"><font color="#1122aa">boolean_T</font></a> guard8 = false;
+</span><span><a class="LN" name="154">  154   </a>  <a href="rtwtypes_h.html#type_boolean_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_boolean_T');" target="_self"><font color="#1122aa">boolean_T</font></a> guard9 = false;
+</span><span><a class="LN" name="155">  155   </a>  <a href="zero_crossing_types_h.html#type_ZCEventType" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ZCEventType');" target="_self"><font color="#1122aa">ZCEventType</font></a> zcEvent;
+</span><span><a class="LN" name="156">  156   </a>
+</span><span><a class="LN" name="157">  157   </a>  <span class="CT">/* DiscretePulseGenerator: '&lt;S1&gt;/Pulse Generator' */</span>
+</span><span><a class="LN" name="158">  158   </a>  rtb_PulseGenerator = ((<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.clockTickCounter &lt; 1) &amp;&amp; (<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.clockTickCounter &gt;=
+</span><span><a class="LN" name="159">  159   </a>    0));
+</span><span><a class="LN" name="160">  160   </a>  <span class="KW">if</span> (<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.clockTickCounter &gt;= 1) <b>{</b>
+</span><span><a class="LN" name="161">  161   </a>    <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.clockTickCounter = 0;
+</span><span><a class="LN" name="162">  162   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="163">  163   </a>    <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.clockTickCounter++;
+</span><span><a class="LN" name="164">  164   </a>  <b>}</b>
+</span><span><a class="LN" name="165">  165   </a>
+</span><span><a class="LN" name="166">  166   </a>  <span class="CT">/* End of DiscretePulseGenerator: '&lt;S1&gt;/Pulse Generator' */</span>
+</span><span><a class="LN" name="167">  167   </a>
+</span><span><a class="LN" name="168">  168   </a>  <span class="CT">/* Chart: '&lt;S1&gt;/Chart' incorporates:</span>
+</span><span><a class="LN" name="169">  169   </a><span class="CT">   *  TriggerPort: '&lt;S2&gt;/clock'</span>
+</span><span><a class="LN" name="170">  170   </a><span class="CT">   */</span>
+</span><span><a class="LN" name="171">  171   </a>  zcEvent = <a href="#fcn_rt_ZCFcn" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rt_ZCFcn');" target="_self"><font color="#1122aa">rt_ZCFcn</font></a>(ANY_ZERO_CROSSING,&amp;<a href="#var_rtPrevZCX" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtPrevZCX');" target="_self"><font color="#1122aa">rtPrevZCX</font></a>.Chart_Trig_ZCE,
+</span><span><a class="LN" name="172">  172   </a>                     ((<a href="rtwtypes_h.html#type_real_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_real_T');" target="_self"><font color="#1122aa">real_T</font></a>)rtb_PulseGenerator));
+</span><span><a class="LN" name="173">  173   </a>  <span class="KW">if</span> (zcEvent != NO_ZCEVENT) <b>{</b>
+</span><span><a class="LN" name="174">  174   </a>    <span class="KW">if</span> (<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_active_c3_ONTROL == 0U) <b>{</b>
+</span><span><a class="LN" name="175">  175   </a>      <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_active_c3_ONTROL = 1U;
+</span><span><a class="LN" name="176">  176   </a>      <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_INICIO;
+</span><span><a class="LN" name="177">  177   </a>
+</span><span><a class="LN" name="178">  178   </a>      <span class="CT">/* Outport: '&lt;Root&gt;/ST1' */</span>
+</span><span><a class="LN" name="179">  179   </a>      <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST1 = 0.0;
+</span><span><a class="LN" name="180">  180   </a>
+</span><span><a class="LN" name="181">  181   </a>      <span class="CT">/* Outport: '&lt;Root&gt;/ST2' */</span>
+</span><span><a class="LN" name="182">  182   </a>      <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST2 = 0.0;
+</span><span><a class="LN" name="183">  183   </a>
+</span><span><a class="LN" name="184">  184   </a>      <span class="CT">/* Outport: '&lt;Root&gt;/ST3' */</span>
+</span><span><a class="LN" name="185">  185   </a>      <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST3 = 0.0;
+</span><span><a class="LN" name="186">  186   </a>
+</span><span><a class="LN" name="187">  187   </a>      <span class="CT">/* Outport: '&lt;Root&gt;/ST4' */</span>
+</span><span><a class="LN" name="188">  188   </a>      <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST4 = 0.0;
+</span><span><a class="LN" name="189">  189   </a>
+</span><span><a class="LN" name="190">  190   </a>      <span class="CT">/* Outport: '&lt;Root&gt;/ST5' */</span>
+</span><span><a class="LN" name="191">  191   </a>      <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST5 = 0.0;
+</span><span><a class="LN" name="192">  192   </a>    <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="193">  193   </a>      guard1 = false;
+</span><span><a class="LN" name="194">  194   </a>      guard2 = false;
+</span><span><a class="LN" name="195">  195   </a>      guard3 = false;
+</span><span><a class="LN" name="196">  196   </a>      guard4 = false;
+</span><span><a class="LN" name="197">  197   </a>      guard5 = false;
+</span><span><a class="LN" name="198">  198   </a>      guard6 = false;
+</span><span><a class="LN" name="199">  199   </a>      guard7 = false;
+</span><span><a class="LN" name="200">  200   </a>      guard8 = false;
+</span><span><a class="LN" name="201">  201   </a>      guard9 = false;
+</span><span><a class="LN" name="202">  202   </a>      guard10 = false;
+</span><span><a class="LN" name="203">  203   </a>      <span class="KW">switch</span> (<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL) <b>{</b>
+</span><span><a class="LN" name="204">  204   </a>       <span class="KW">case</span> IN_INICIO:
+</span><span><a class="LN" name="205">  205   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/ST1' */</span>
+</span><span><a class="LN" name="206">  206   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST1 = 0.0;
+</span><span><a class="LN" name="207">  207   </a>
+</span><span><a class="LN" name="208">  208   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/ST2' */</span>
+</span><span><a class="LN" name="209">  209   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST2 = 0.0;
+</span><span><a class="LN" name="210">  210   </a>
+</span><span><a class="LN" name="211">  211   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/ST3' */</span>
+</span><span><a class="LN" name="212">  212   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST3 = 0.0;
+</span><span><a class="LN" name="213">  213   </a>
+</span><span><a class="LN" name="214">  214   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/ST4' */</span>
+</span><span><a class="LN" name="215">  215   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST4 = 0.0;
+</span><span><a class="LN" name="216">  216   </a>
+</span><span><a class="LN" name="217">  217   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/ST5' */</span>
+</span><span><a class="LN" name="218">  218   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST5 = 0.0;
+</span><span><a class="LN" name="219">  219   </a>
+</span><span><a class="LN" name="220">  220   </a>        <span class="CT">/* Inport: '&lt;Root&gt;/DOOR_OUT' incorporates:</span>
+</span><span><a class="LN" name="221">  221   </a><span class="CT">         *  Inport: '&lt;Root&gt;/DOOR_IN'</span>
+</span><span><a class="LN" name="222">  222   </a><span class="CT">         */</span>
+</span><span><a class="LN" name="223">  223   </a>        <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0) <b>{</b>
+</span><span><a class="LN" name="224">  224   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir1;
+</span><span><a class="LN" name="225">  225   </a>
+</span><span><a class="LN" name="226">  226   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/puerta_out' */</span>
+</span><span><a class="LN" name="227">  227   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_out = 1.0;
+</span><span><a class="LN" name="228">  228   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="229">  229   </a>          <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_IN == 1.0) <b>{</b>
+</span><span><a class="LN" name="230">  230   </a>            <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir;
+</span><span><a class="LN" name="231">  231   </a>
+</span><span><a class="LN" name="232">  232   </a>            <span class="CT">/* Outport: '&lt;Root&gt;/puerta_in' */</span>
+</span><span><a class="LN" name="233">  233   </a>            <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_in = 1.0;
+</span><span><a class="LN" name="234">  234   </a>          <b>}</b>
+</span><span><a class="LN" name="235">  235   </a>        <b>}</b>
+</span><span><a class="LN" name="236">  236   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="237">  237   </a>
+</span><span><a class="LN" name="238">  238   </a>       <span class="KW">case</span> IN_PARQ1_OFF:
+</span><span><a class="LN" name="239">  239   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/ST1' */</span>
+</span><span><a class="LN" name="240">  240   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST1 = 0.0;
+</span><span><a class="LN" name="241">  241   </a>        <span class="KW">if</span> ((<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.cont1 == 5.0) &amp;&amp; (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0)) <b>{</b>
+</span><span><a class="LN" name="242">  242   </a>          guard1 = true;
+</span><span><a class="LN" name="243">  243   </a>        <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_IN == 1.0) <b>{</b>
+</span><span><a class="LN" name="244">  244   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir;
+</span><span><a class="LN" name="245">  245   </a>
+</span><span><a class="LN" name="246">  246   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/puerta_in' */</span>
+</span><span><a class="LN" name="247">  247   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_in = 1.0;
+</span><span><a class="LN" name="248">  248   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="249">  249   </a>          <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0) <b>{</b>
+</span><span><a class="LN" name="250">  250   </a>            guard1 = true;
+</span><span><a class="LN" name="251">  251   </a>          <b>}</b>
+</span><span><a class="LN" name="252">  252   </a>        <b>}</b>
+</span><span><a class="LN" name="253">  253   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="254">  254   </a>
+</span><span><a class="LN" name="255">  255   </a>       <span class="KW">case</span> IN_PARQ1_ON:
+</span><span><a class="LN" name="256">  256   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/ST1' */</span>
+</span><span><a class="LN" name="257">  257   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST1 = 1.0;
+</span><span><a class="LN" name="258">  258   </a>        <span class="KW">if</span> ((<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.cont1 == 5.0) &amp;&amp; (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0)) <b>{</b>
+</span><span><a class="LN" name="259">  259   </a>          guard2 = true;
+</span><span><a class="LN" name="260">  260   </a>        <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_IN == 1.0) <b>{</b>
+</span><span><a class="LN" name="261">  261   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir;
+</span><span><a class="LN" name="262">  262   </a>
+</span><span><a class="LN" name="263">  263   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/puerta_in' */</span>
+</span><span><a class="LN" name="264">  264   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_in = 1.0;
+</span><span><a class="LN" name="265">  265   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="266">  266   </a>          <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0) <b>{</b>
+</span><span><a class="LN" name="267">  267   </a>            guard2 = true;
+</span><span><a class="LN" name="268">  268   </a>          <b>}</b>
+</span><span><a class="LN" name="269">  269   </a>        <b>}</b>
+</span><span><a class="LN" name="270">  270   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="271">  271   </a>
+</span><span><a class="LN" name="272">  272   </a>       <span class="KW">case</span> IN_PARQ2_OFF:
+</span><span><a class="LN" name="273">  273   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/ST2' */</span>
+</span><span><a class="LN" name="274">  274   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST2 = 0.0;
+</span><span><a class="LN" name="275">  275   </a>        <span class="KW">if</span> ((<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.cont1 == 5.0) &amp;&amp; (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0)) <b>{</b>
+</span><span><a class="LN" name="276">  276   </a>          guard3 = true;
+</span><span><a class="LN" name="277">  277   </a>        <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_IN == 1.0) <b>{</b>
+</span><span><a class="LN" name="278">  278   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir;
+</span><span><a class="LN" name="279">  279   </a>
+</span><span><a class="LN" name="280">  280   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/puerta_in' */</span>
+</span><span><a class="LN" name="281">  281   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_in = 1.0;
+</span><span><a class="LN" name="282">  282   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="283">  283   </a>          <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0) <b>{</b>
+</span><span><a class="LN" name="284">  284   </a>            guard3 = true;
+</span><span><a class="LN" name="285">  285   </a>          <b>}</b>
+</span><span><a class="LN" name="286">  286   </a>        <b>}</b>
+</span><span><a class="LN" name="287">  287   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="288">  288   </a>
+</span><span><a class="LN" name="289">  289   </a>       <span class="KW">case</span> IN_PARQ2_ON:
+</span><span><a class="LN" name="290">  290   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/ST2' */</span>
+</span><span><a class="LN" name="291">  291   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST2 = 1.0;
+</span><span><a class="LN" name="292">  292   </a>        <span class="KW">if</span> ((<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.cont1 == 5.0) &amp;&amp; (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0)) <b>{</b>
+</span><span><a class="LN" name="293">  293   </a>          guard4 = true;
+</span><span><a class="LN" name="294">  294   </a>        <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_IN == 1.0) <b>{</b>
+</span><span><a class="LN" name="295">  295   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir;
+</span><span><a class="LN" name="296">  296   </a>
+</span><span><a class="LN" name="297">  297   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/puerta_in' */</span>
+</span><span><a class="LN" name="298">  298   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_in = 1.0;
+</span><span><a class="LN" name="299">  299   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="300">  300   </a>          <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0) <b>{</b>
+</span><span><a class="LN" name="301">  301   </a>            guard4 = true;
+</span><span><a class="LN" name="302">  302   </a>          <b>}</b>
+</span><span><a class="LN" name="303">  303   </a>        <b>}</b>
+</span><span><a class="LN" name="304">  304   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="305">  305   </a>
+</span><span><a class="LN" name="306">  306   </a>       <span class="KW">case</span> IN_PARQ3_OFF:
+</span><span><a class="LN" name="307">  307   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/ST3' */</span>
+</span><span><a class="LN" name="308">  308   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST3 = 0.0;
+</span><span><a class="LN" name="309">  309   </a>        <span class="KW">if</span> ((<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.cont1 == 5.0) &amp;&amp; (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0)) <b>{</b>
+</span><span><a class="LN" name="310">  310   </a>          guard5 = true;
+</span><span><a class="LN" name="311">  311   </a>        <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_IN == 1.0) <b>{</b>
+</span><span><a class="LN" name="312">  312   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir;
+</span><span><a class="LN" name="313">  313   </a>
+</span><span><a class="LN" name="314">  314   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/puerta_in' */</span>
+</span><span><a class="LN" name="315">  315   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_in = 1.0;
+</span><span><a class="LN" name="316">  316   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="317">  317   </a>          <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0) <b>{</b>
+</span><span><a class="LN" name="318">  318   </a>            guard5 = true;
+</span><span><a class="LN" name="319">  319   </a>          <b>}</b>
+</span><span><a class="LN" name="320">  320   </a>        <b>}</b>
+</span><span><a class="LN" name="321">  321   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="322">  322   </a>
+</span><span><a class="LN" name="323">  323   </a>       <span class="KW">case</span> IN_PARQ3_ON:
+</span><span><a class="LN" name="324">  324   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/ST3' */</span>
+</span><span><a class="LN" name="325">  325   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST3 = 1.0;
+</span><span><a class="LN" name="326">  326   </a>        <span class="KW">if</span> ((<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.cont1 == 5.0) &amp;&amp; (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0)) <b>{</b>
+</span><span><a class="LN" name="327">  327   </a>          guard6 = true;
+</span><span><a class="LN" name="328">  328   </a>        <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_IN == 1.0) <b>{</b>
+</span><span><a class="LN" name="329">  329   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir;
+</span><span><a class="LN" name="330">  330   </a>
+</span><span><a class="LN" name="331">  331   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/puerta_in' */</span>
+</span><span><a class="LN" name="332">  332   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_in = 1.0;
+</span><span><a class="LN" name="333">  333   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="334">  334   </a>          <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0) <b>{</b>
+</span><span><a class="LN" name="335">  335   </a>            guard6 = true;
+</span><span><a class="LN" name="336">  336   </a>          <b>}</b>
+</span><span><a class="LN" name="337">  337   </a>        <b>}</b>
+</span><span><a class="LN" name="338">  338   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="339">  339   </a>
+</span><span><a class="LN" name="340">  340   </a>       <span class="KW">case</span> IN_PARQ4_OFF:
+</span><span><a class="LN" name="341">  341   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/ST4' */</span>
+</span><span><a class="LN" name="342">  342   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST4 = 0.0;
+</span><span><a class="LN" name="343">  343   </a>        <span class="KW">if</span> ((<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.cont1 == 5.0) &amp;&amp; (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0)) <b>{</b>
+</span><span><a class="LN" name="344">  344   </a>          guard7 = true;
+</span><span><a class="LN" name="345">  345   </a>        <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_IN == 1.0) <b>{</b>
+</span><span><a class="LN" name="346">  346   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir;
+</span><span><a class="LN" name="347">  347   </a>
+</span><span><a class="LN" name="348">  348   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/puerta_in' */</span>
+</span><span><a class="LN" name="349">  349   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_in = 1.0;
+</span><span><a class="LN" name="350">  350   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="351">  351   </a>          <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0) <b>{</b>
+</span><span><a class="LN" name="352">  352   </a>            guard7 = true;
+</span><span><a class="LN" name="353">  353   </a>          <b>}</b>
+</span><span><a class="LN" name="354">  354   </a>        <b>}</b>
+</span><span><a class="LN" name="355">  355   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="356">  356   </a>
+</span><span><a class="LN" name="357">  357   </a>       <span class="KW">case</span> IN_PARQ4_ON:
+</span><span><a class="LN" name="358">  358   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/ST4' */</span>
+</span><span><a class="LN" name="359">  359   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST4 = 1.0;
+</span><span><a class="LN" name="360">  360   </a>        <span class="KW">if</span> ((<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.cont1 == 5.0) &amp;&amp; (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0)) <b>{</b>
+</span><span><a class="LN" name="361">  361   </a>          guard8 = true;
+</span><span><a class="LN" name="362">  362   </a>        <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_IN == 1.0) <b>{</b>
+</span><span><a class="LN" name="363">  363   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir;
+</span><span><a class="LN" name="364">  364   </a>
+</span><span><a class="LN" name="365">  365   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/puerta_in' */</span>
+</span><span><a class="LN" name="366">  366   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_in = 1.0;
+</span><span><a class="LN" name="367">  367   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="368">  368   </a>          <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0) <b>{</b>
+</span><span><a class="LN" name="369">  369   </a>            guard8 = true;
+</span><span><a class="LN" name="370">  370   </a>          <b>}</b>
+</span><span><a class="LN" name="371">  371   </a>        <b>}</b>
+</span><span><a class="LN" name="372">  372   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="373">  373   </a>
+</span><span><a class="LN" name="374">  374   </a>       <span class="KW">case</span> IN_PARQ5_OFF:
+</span><span><a class="LN" name="375">  375   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/ST5' */</span>
+</span><span><a class="LN" name="376">  376   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST5 = 0.0;
+</span><span><a class="LN" name="377">  377   </a>        <span class="KW">if</span> ((<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.cont1 == 5.0) &amp;&amp; (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0)) <b>{</b>
+</span><span><a class="LN" name="378">  378   </a>          guard9 = true;
+</span><span><a class="LN" name="379">  379   </a>        <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_IN == 1.0) <b>{</b>
+</span><span><a class="LN" name="380">  380   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir;
+</span><span><a class="LN" name="381">  381   </a>
+</span><span><a class="LN" name="382">  382   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/puerta_in' */</span>
+</span><span><a class="LN" name="383">  383   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_in = 1.0;
+</span><span><a class="LN" name="384">  384   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="385">  385   </a>          <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0) <b>{</b>
+</span><span><a class="LN" name="386">  386   </a>            guard9 = true;
+</span><span><a class="LN" name="387">  387   </a>          <b>}</b>
+</span><span><a class="LN" name="388">  388   </a>        <b>}</b>
+</span><span><a class="LN" name="389">  389   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="390">  390   </a>
+</span><span><a class="LN" name="391">  391   </a>       <span class="KW">case</span> IN_PARQ5_ON:
+</span><span><a class="LN" name="392">  392   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/ST5' */</span>
+</span><span><a class="LN" name="393">  393   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST5 = 1.0;
+</span><span><a class="LN" name="394">  394   </a>        <span class="KW">if</span> ((<a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.cont1 == 5.0) &amp;&amp; (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0)) <b>{</b>
+</span><span><a class="LN" name="395">  395   </a>          guard10 = true;
+</span><span><a class="LN" name="396">  396   </a>        <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_IN == 1.0) <b>{</b>
+</span><span><a class="LN" name="397">  397   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir;
+</span><span><a class="LN" name="398">  398   </a>
+</span><span><a class="LN" name="399">  399   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/puerta_in' */</span>
+</span><span><a class="LN" name="400">  400   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_in = 1.0;
+</span><span><a class="LN" name="401">  401   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="402">  402   </a>          <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 1.0) <b>{</b>
+</span><span><a class="LN" name="403">  403   </a>            guard10 = true;
+</span><span><a class="LN" name="404">  404   </a>          <b>}</b>
+</span><span><a class="LN" name="405">  405   </a>        <b>}</b>
+</span><span><a class="LN" name="406">  406   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="407">  407   </a>
+</span><span><a class="LN" name="408">  408   </a>       <span class="KW">case</span> IN_abrir:
+</span><span><a class="LN" name="409">  409   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/puerta_in' */</span>
+</span><span><a class="LN" name="410">  410   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_in = 1.0;
+</span><span><a class="LN" name="411">  411   </a>
+</span><span><a class="LN" name="412">  412   </a>        <span class="CT">/* Inport: '&lt;Root&gt;/DOOR_IN' */</span>
+</span><span><a class="LN" name="413">  413   </a>        <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_IN == 0.0) <b>{</b>
+</span><span><a class="LN" name="414">  414   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_aumentar;
+</span><span><a class="LN" name="415">  415   </a>
+</span><span><a class="LN" name="416">  416   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/puerta_in' */</span>
+</span><span><a class="LN" name="417">  417   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_in = 0.0;
+</span><span><a class="LN" name="418">  418   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.cont1++;
+</span><span><a class="LN" name="419">  419   </a>
+</span><span><a class="LN" name="420">  420   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/cont' */</span>
+</span><span><a class="LN" name="421">  421   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.cont++;
+</span><span><a class="LN" name="422">  422   </a>        <b>}</b>
+</span><span><a class="LN" name="423">  423   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="424">  424   </a>
+</span><span><a class="LN" name="425">  425   </a>       <span class="KW">case</span> IN_abrir1:
+</span><span><a class="LN" name="426">  426   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/puerta_out' */</span>
+</span><span><a class="LN" name="427">  427   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_out = 1.0;
+</span><span><a class="LN" name="428">  428   </a>
+</span><span><a class="LN" name="429">  429   </a>        <span class="CT">/* Inport: '&lt;Root&gt;/DOOR_OUT' */</span>
+</span><span><a class="LN" name="430">  430   </a>        <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.DOOR_OUT == 0.0) <b>{</b>
+</span><span><a class="LN" name="431">  431   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_disminuir;
+</span><span><a class="LN" name="432">  432   </a>
+</span><span><a class="LN" name="433">  433   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/puerta_out' */</span>
+</span><span><a class="LN" name="434">  434   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_out = 0.0;
+</span><span><a class="LN" name="435">  435   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.cont1--;
+</span><span><a class="LN" name="436">  436   </a>
+</span><span><a class="LN" name="437">  437   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/cont' */</span>
+</span><span><a class="LN" name="438">  438   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.cont--;
+</span><span><a class="LN" name="439">  439   </a>        <b>}</b>
+</span><span><a class="LN" name="440">  440   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="441">  441   </a>
+</span><span><a class="LN" name="442">  442   </a>       <span class="KW">case</span> IN_aumentar:
+</span><span><a class="LN" name="443">  443   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/puerta_in' */</span>
+</span><span><a class="LN" name="444">  444   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_in = 0.0;
+</span><span><a class="LN" name="445">  445   </a>
+</span><span><a class="LN" name="446">  446   </a>        <span class="CT">/* Inport: '&lt;Root&gt;/P1' incorporates:</span>
+</span><span><a class="LN" name="447">  447   </a><span class="CT">         *  Inport: '&lt;Root&gt;/P2'</span>
+</span><span><a class="LN" name="448">  448   </a><span class="CT">         *  Inport: '&lt;Root&gt;/P3'</span>
+</span><span><a class="LN" name="449">  449   </a><span class="CT">         *  Inport: '&lt;Root&gt;/P4'</span>
+</span><span><a class="LN" name="450">  450   </a><span class="CT">         *  Inport: '&lt;Root&gt;/P5'</span>
+</span><span><a class="LN" name="451">  451   </a><span class="CT">         */</span>
+</span><span><a class="LN" name="452">  452   </a>        <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.P1 == 1.0) <b>{</b>
+</span><span><a class="LN" name="453">  453   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_PARQ1_ON;
+</span><span><a class="LN" name="454">  454   </a>
+</span><span><a class="LN" name="455">  455   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/ST1' */</span>
+</span><span><a class="LN" name="456">  456   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST1 = 1.0;
+</span><span><a class="LN" name="457">  457   </a>        <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.P2 == 1.0) <b>{</b>
+</span><span><a class="LN" name="458">  458   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_PARQ2_ON;
+</span><span><a class="LN" name="459">  459   </a>
+</span><span><a class="LN" name="460">  460   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/ST2' */</span>
+</span><span><a class="LN" name="461">  461   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST2 = 1.0;
+</span><span><a class="LN" name="462">  462   </a>        <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.P3 == 1.0) <b>{</b>
+</span><span><a class="LN" name="463">  463   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_PARQ3_ON;
+</span><span><a class="LN" name="464">  464   </a>
+</span><span><a class="LN" name="465">  465   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/ST3' */</span>
+</span><span><a class="LN" name="466">  466   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST3 = 1.0;
+</span><span><a class="LN" name="467">  467   </a>        <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.P4 == 1.0) <b>{</b>
+</span><span><a class="LN" name="468">  468   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_PARQ4_ON;
+</span><span><a class="LN" name="469">  469   </a>
+</span><span><a class="LN" name="470">  470   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/ST4' */</span>
+</span><span><a class="LN" name="471">  471   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST4 = 1.0;
+</span><span><a class="LN" name="472">  472   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="473">  473   </a>          <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.P5 == 1.0) <b>{</b>
+</span><span><a class="LN" name="474">  474   </a>            <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_PARQ5_ON;
+</span><span><a class="LN" name="475">  475   </a>
+</span><span><a class="LN" name="476">  476   </a>            <span class="CT">/* Outport: '&lt;Root&gt;/ST5' */</span>
+</span><span><a class="LN" name="477">  477   </a>            <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST5 = 1.0;
+</span><span><a class="LN" name="478">  478   </a>          <b>}</b>
+</span><span><a class="LN" name="479">  479   </a>        <b>}</b>
+</span><span><a class="LN" name="480">  480   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="481">  481   </a>
+</span><span><a class="LN" name="482">  482   </a>       <span class="KW">default</span>:
+</span><span><a class="LN" name="483">  483   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/puerta_out' */</span>
+</span><span><a class="LN" name="484">  484   </a>        <span class="CT">/* case IN_disminuir: */</span>
+</span><span><a class="LN" name="485">  485   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_out = 0.0;
+</span><span><a class="LN" name="486">  486   </a>
+</span><span><a class="LN" name="487">  487   </a>        <span class="CT">/* Inport: '&lt;Root&gt;/P1' incorporates:</span>
+</span><span><a class="LN" name="488">  488   </a><span class="CT">         *  Inport: '&lt;Root&gt;/P2'</span>
+</span><span><a class="LN" name="489">  489   </a><span class="CT">         *  Inport: '&lt;Root&gt;/P3'</span>
+</span><span><a class="LN" name="490">  490   </a><span class="CT">         *  Inport: '&lt;Root&gt;/P4'</span>
+</span><span><a class="LN" name="491">  491   </a><span class="CT">         *  Inport: '&lt;Root&gt;/P5'</span>
+</span><span><a class="LN" name="492">  492   </a><span class="CT">         */</span>
+</span><span><a class="LN" name="493">  493   </a>        <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.P1 == 0.0) <b>{</b>
+</span><span><a class="LN" name="494">  494   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_PARQ1_OFF;
+</span><span><a class="LN" name="495">  495   </a>
+</span><span><a class="LN" name="496">  496   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/ST1' */</span>
+</span><span><a class="LN" name="497">  497   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST1 = 0.0;
+</span><span><a class="LN" name="498">  498   </a>        <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.P2 == 0.0) <b>{</b>
+</span><span><a class="LN" name="499">  499   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_PARQ2_OFF;
+</span><span><a class="LN" name="500">  500   </a>
+</span><span><a class="LN" name="501">  501   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/ST2' */</span>
+</span><span><a class="LN" name="502">  502   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST2 = 0.0;
+</span><span><a class="LN" name="503">  503   </a>        <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.P3 == 0.0) <b>{</b>
+</span><span><a class="LN" name="504">  504   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_PARQ3_OFF;
+</span><span><a class="LN" name="505">  505   </a>
+</span><span><a class="LN" name="506">  506   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/ST3' */</span>
+</span><span><a class="LN" name="507">  507   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST3 = 0.0;
+</span><span><a class="LN" name="508">  508   </a>        <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.P4 == 0.0) <b>{</b>
+</span><span><a class="LN" name="509">  509   </a>          <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_PARQ4_OFF;
+</span><span><a class="LN" name="510">  510   </a>
+</span><span><a class="LN" name="511">  511   </a>          <span class="CT">/* Outport: '&lt;Root&gt;/ST4' */</span>
+</span><span><a class="LN" name="512">  512   </a>          <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST4 = 0.0;
+</span><span><a class="LN" name="513">  513   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="514">  514   </a>          <span class="KW">if</span> (<a href="#var_rtU" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtU');" target="_self"><font color="#1122aa">rtU</font></a>.P5 == 0.0) <b>{</b>
+</span><span><a class="LN" name="515">  515   </a>            <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_PARQ5_OFF;
+</span><span><a class="LN" name="516">  516   </a>
+</span><span><a class="LN" name="517">  517   </a>            <span class="CT">/* Outport: '&lt;Root&gt;/ST5' */</span>
+</span><span><a class="LN" name="518">  518   </a>            <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.ST5 = 0.0;
+</span><span><a class="LN" name="519">  519   </a>          <b>}</b>
+</span><span><a class="LN" name="520">  520   </a>        <b>}</b>
+</span><span><a class="LN" name="521">  521   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="522">  522   </a>      <b>}</b>
+</span><span><a class="LN" name="523">  523   </a>
+</span><span><a class="LN" name="524">  524   </a>      <span class="KW">if</span> (guard10) <b>{</b>
+</span><span><a class="LN" name="525">  525   </a>        <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir1;
+</span><span><a class="LN" name="526">  526   </a>
+</span><span><a class="LN" name="527">  527   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/puerta_out' */</span>
+</span><span><a class="LN" name="528">  528   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_out = 1.0;
+</span><span><a class="LN" name="529">  529   </a>      <b>}</b>
+</span><span><a class="LN" name="530">  530   </a>
+</span><span><a class="LN" name="531">  531   </a>      <span class="KW">if</span> (guard9) <b>{</b>
+</span><span><a class="LN" name="532">  532   </a>        <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir1;
+</span><span><a class="LN" name="533">  533   </a>
+</span><span><a class="LN" name="534">  534   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/puerta_out' */</span>
+</span><span><a class="LN" name="535">  535   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_out = 1.0;
+</span><span><a class="LN" name="536">  536   </a>      <b>}</b>
+</span><span><a class="LN" name="537">  537   </a>
+</span><span><a class="LN" name="538">  538   </a>      <span class="KW">if</span> (guard8) <b>{</b>
+</span><span><a class="LN" name="539">  539   </a>        <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir1;
+</span><span><a class="LN" name="540">  540   </a>
+</span><span><a class="LN" name="541">  541   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/puerta_out' */</span>
+</span><span><a class="LN" name="542">  542   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_out = 1.0;
+</span><span><a class="LN" name="543">  543   </a>      <b>}</b>
+</span><span><a class="LN" name="544">  544   </a>
+</span><span><a class="LN" name="545">  545   </a>      <span class="KW">if</span> (guard7) <b>{</b>
+</span><span><a class="LN" name="546">  546   </a>        <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir1;
+</span><span><a class="LN" name="547">  547   </a>
+</span><span><a class="LN" name="548">  548   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/puerta_out' */</span>
+</span><span><a class="LN" name="549">  549   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_out = 1.0;
+</span><span><a class="LN" name="550">  550   </a>      <b>}</b>
+</span><span><a class="LN" name="551">  551   </a>
+</span><span><a class="LN" name="552">  552   </a>      <span class="KW">if</span> (guard6) <b>{</b>
+</span><span><a class="LN" name="553">  553   </a>        <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir1;
+</span><span><a class="LN" name="554">  554   </a>
+</span><span><a class="LN" name="555">  555   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/puerta_out' */</span>
+</span><span><a class="LN" name="556">  556   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_out = 1.0;
+</span><span><a class="LN" name="557">  557   </a>      <b>}</b>
+</span><span><a class="LN" name="558">  558   </a>
+</span><span><a class="LN" name="559">  559   </a>      <span class="KW">if</span> (guard5) <b>{</b>
+</span><span><a class="LN" name="560">  560   </a>        <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir1;
+</span><span><a class="LN" name="561">  561   </a>
+</span><span><a class="LN" name="562">  562   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/puerta_out' */</span>
+</span><span><a class="LN" name="563">  563   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_out = 1.0;
+</span><span><a class="LN" name="564">  564   </a>      <b>}</b>
+</span><span><a class="LN" name="565">  565   </a>
+</span><span><a class="LN" name="566">  566   </a>      <span class="KW">if</span> (guard4) <b>{</b>
+</span><span><a class="LN" name="567">  567   </a>        <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir1;
+</span><span><a class="LN" name="568">  568   </a>
+</span><span><a class="LN" name="569">  569   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/puerta_out' */</span>
+</span><span><a class="LN" name="570">  570   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_out = 1.0;
+</span><span><a class="LN" name="571">  571   </a>      <b>}</b>
+</span><span><a class="LN" name="572">  572   </a>
+</span><span><a class="LN" name="573">  573   </a>      <span class="KW">if</span> (guard3) <b>{</b>
+</span><span><a class="LN" name="574">  574   </a>        <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir1;
+</span><span><a class="LN" name="575">  575   </a>
+</span><span><a class="LN" name="576">  576   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/puerta_out' */</span>
+</span><span><a class="LN" name="577">  577   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_out = 1.0;
+</span><span><a class="LN" name="578">  578   </a>      <b>}</b>
+</span><span><a class="LN" name="579">  579   </a>
+</span><span><a class="LN" name="580">  580   </a>      <span class="KW">if</span> (guard2) <b>{</b>
+</span><span><a class="LN" name="581">  581   </a>        <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir1;
+</span><span><a class="LN" name="582">  582   </a>
+</span><span><a class="LN" name="583">  583   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/puerta_out' */</span>
+</span><span><a class="LN" name="584">  584   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_out = 1.0;
+</span><span><a class="LN" name="585">  585   </a>      <b>}</b>
+</span><span><a class="LN" name="586">  586   </a>
+</span><span><a class="LN" name="587">  587   </a>      <span class="KW">if</span> (guard1) <b>{</b>
+</span><span><a class="LN" name="588">  588   </a>        <a href="#var_rtDW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtDW');" target="_self"><font color="#1122aa">rtDW</font></a>.is_c3_ONTROL = IN_abrir1;
+</span><span><a class="LN" name="589">  589   </a>
+</span><span><a class="LN" name="590">  590   </a>        <span class="CT">/* Outport: '&lt;Root&gt;/puerta_out' */</span>
+</span><span><a class="LN" name="591">  591   </a>        <a href="#var_rtY" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtY');" target="_self"><font color="#1122aa">rtY</font></a>.puerta_out = 1.0;
+</span><span><a class="LN" name="592">  592   </a>      <b>}</b>
+</span><span><a class="LN" name="593">  593   </a>    <b>}</b>
+</span><span><a class="LN" name="594">  594   </a>  <b>}</b>
+</span><span><a class="LN" name="595">  595   </a><b>}</b>
+</span><span><a class="LN" name="596">  596   </a>
+</span><span><a class="LN" name="597">  597   </a><span class="CT">/* Model initialize function */</span>
+</span><span><a class="LN" name="598">  598   </a><span class="DT">void</span> <a name="fcn_ONTROL_initialize">ONTROL_initialize</a>(<span class="DT">void</span>)
+</span><span><a class="LN" name="599">  599   </a><b>{</b>
+</span><span><a class="LN" name="600">  600   </a>  <a href="#var_rtPrevZCX" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtPrevZCX');" target="_self"><font color="#1122aa">rtPrevZCX</font></a>.Chart_Trig_ZCE = UNINITIALIZED_ZCSIG;
+</span><span><a class="LN" name="601">  601   </a><b>}</b>
+</span><span><a class="LN" name="602">  602   </a>
+</span><span><a class="LN" name="603">  603   </a><span class="CT">/*</span>
+</span><span><a class="LN" name="604">  604   </a><span class="CT"> * File trailer for generated code.</span>
+</span><span><a class="LN" name="605">  605   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="606">  606   </a><span class="CT"> * [EOF]</span>
+</span><span><a class="LN" name="607">  607   </a><span class="CT"> */</span>
+</span><span><a class="LN" name="608">  608   </a>
+</span></pre>
+</td></tr></table>
+</p>
+</body>
+</html>
